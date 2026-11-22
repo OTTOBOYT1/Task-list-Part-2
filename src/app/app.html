@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>My Notes</h1>
+
+  <div class="note-form">
+    <h2>{{ editingId !== null ? 'Edit Note' : 'Add Note' }}</h2>
+    <input type="text" placeholder="Note title" [(ngModel)]="title" />
+    <textarea placeholder="Note text" [(ngModel)]="text"></textarea>
+    <button type="button" (click)="addNote()" [disabled]="saving">
+      {{ saving ? 'Saving...' : (editingId !== null ? 'Save Changes' : 'Add Note') }}
+    </button>
+    @if (editingId !== null) {
+      <button type="button" class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+    }
+  </div>
+
+  <h2>Your Notes</h2>
+  <div class="notes-list">
+    @for (note of notes; track note.id) {
+      <div class="note-card">
+        <h3>{{ note.title }}</h3>
+        <p>{{ note.text }}</p>
+        <div class="note-actions">
+          <button type="button" class="edit-btn" (click)="editNote(note)">Edit</button>
+          <button type="button" class="delete-btn" (click)="deleteNote(note.id)">Delete</button>
+        </div>
+      </div>
+    } @empty {
+      <p class="empty">No notes yet</p>
+    }
+  </div>
+</div>
